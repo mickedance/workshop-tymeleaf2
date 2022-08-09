@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: resources_fragment">
+
+</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar_fragment"> </nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3 offset-3">
+            <div th:if="${error}" class="alert-warning alert" th:text="${error}"></div>
+            <div th:if="${success}" class="alert-success alert" th:text="${success}"></div>
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading" th:text="'Details of ' + ${#strings.toUpperCase(view.name)}"></h4>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th>Action</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${view==null }">
+                    <th scope="row">No Record found</th>
+                </tr>
+                <tr th:unless="${view==null }"  >
+                    <th th:text="${view.id}"></th>
+                    <th th:text="${view.name}"></th>
+                    <th>
+                        <a th:href="@{/category/edit/{id} (id = ${view.id})}" class="btn btn-info">Update</a>
+                    </th>
+                    <th>
+                        <a th:href="@{/category/delete/{id} (id = ${view.id})}" class="btn btn-danger">Delete</a>
+                    </th>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

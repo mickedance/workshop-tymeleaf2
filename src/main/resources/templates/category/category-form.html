@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:divth="http://www.w3.org/1999/html">
+<head th:insert="fragments/resources :: resources_fragment">
+</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar_fragment"> </nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3 offset-3">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading" th:text=" ${ form.name} ==null ? 'Add Category': 'Update Category ' + ${#strings.toUpperCase(form.name)}  "></h4>
+            </div>
+            <form th:action="@{/category/} + ${postUrl}"  method="post" th:object="${form}" >
+                <div class="mb-3">
+                    <input hidden th:field="${form.id}">
+                    <label  class="form-label" th:text="${form.name} ==null ? 'Category' : 'Category Id: ' + ${form.id} "></label>
+                    <input type="text" th:field="*{name}" class="form-control" th:value="${form.name}"  placeholder="Category name" >
+                </div>
+                <div class="alert-danger alert" th:if="${#fields.hasErrors('name')}" >
+                    <ul th:each="err : ${#fields.errors('name')}">
+                        <li th:text="${err}"></li>
+                    </ul>
+                </div>
+                <button type="submit" class="btn btn-primary" th:text="${form.name}==null ? 'Add': 'Update'">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

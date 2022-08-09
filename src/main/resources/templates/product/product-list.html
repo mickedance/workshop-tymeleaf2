@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: resources_fragment">
+
+</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar_fragment"> </nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3 offset-3">
+            <div th:if="${error}" class="alert-warning alert" th:text="${error}"></div>
+            <div th:if="${success}" class="alert-success alert" th:text="${success}"></div>
+            <a class="btn-primary btn btn-lg" th:href="@{/product/form}">Add Product</a>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Action</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${products==null || products.isEmpty() }">
+                    <th scope="row">No Records available</th>
+                </tr>
+                <tr th:unless="${products==null || products.isEmpty() }" th:each="p : ${products}" >
+                    <th th:text="${p.id}"></th>
+                    <th th:text="${p.name}"></th>
+                    <th>
+                        <a th:href="@{/product/details/{id} (id = ${p.id})}" class="btn btn-primary">Details</a>
+                    </th>
+                    <th>
+                        <a th:href="@{/product/edit/{id} (id = ${p.id})}" class="btn btn-info">Update</a>
+                    </th>
+                    <th>
+                        <a th:href="@{/product/delete/{id} (id = ${p.id})}" class="btn btn-danger">Delete</a>
+
+                    </th>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

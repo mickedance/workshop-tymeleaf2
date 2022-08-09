@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: resources_fragment">
+
+</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar_fragment"></nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3 offset-3">
+            <div th:if="${error}" class="alert-warning alert" th:text="${error}"></div>
+            <div th:if="${success}" class="alert-success alert" th:text="${success}"></div>
+            <a class="btn-primary btn btn-lg" th:href="@{/category/form}">Add Category</a>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Action</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${categories==null || categories.isEmpty() }">
+                    <th scope="row">No Records available</th>
+                </tr>
+                <tr th:unless="${categories==null || categories.isEmpty() }" th:each="cat : ${categories}">
+                    <th th:text="${cat.id}"></th>
+                    <th th:text="${cat.name}"></th>
+                    <th>
+                        <a th:href="@{/category/details/{id} (id = ${cat.id})}" class="btn btn-primary">Details</a>
+                    </th>
+                    <th>
+                        <a th:href="@{/category/edit/{id} (id = ${cat.id})}" class="btn btn-info">Update</a>
+                    </th>
+                    <th>
+                        <a th:href="@{/category/delete/{id} (id = ${cat.id})}" class="btn btn-danger">Delete</a>
+                    </th>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
